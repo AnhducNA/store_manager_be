@@ -72,3 +72,12 @@ exports.deleteTodo = async (req, res) => {
     res.status(500).json({ error: "Internal Server Error" });
   }
 };
+
+exports.getStoreByUser = async (req, res) => {
+  try {
+    const data = await userService.getStoreByUser();
+    res.status(200).json(data);
+  } catch (error) {
+    return res.status(500).json({ error: "user.controller.fail" });
+  }
+};

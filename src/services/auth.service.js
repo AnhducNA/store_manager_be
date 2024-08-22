@@ -43,6 +43,7 @@ exports.validatePassword = (password = "") => {
     throw new Error("Độ dài mật khẩu phải ít nhất 6 ký tự");
   }
 };
+
 exports.generateToken = async (payload = { userId: "", time: new Date() }) => {
   const tokenAccess = jwt.sign(payload, JWT_SECRET_KEY);
   return tokenAccess;

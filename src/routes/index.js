@@ -3,14 +3,12 @@ const express = require("express");
 
 const authRoute = require("./auth.route");
 const userRoute = require("./user.route");
-const deviceRoute = require("./device.route");
-const categoryDeviceRoute = require("./category_device.route");
+const storeRouter = require("./store.route");
 
 const initRoute = (app) => {
   app.use("/api/auth", authRoute);
+  app.use("/api/store", storeRouter);
   app.use("/api/user", userRoute);
-  app.use("/api/device", deviceRoute);
-  app.use("/api/category-device", categoryDeviceRoute);
 
   app.use((data, req, res, next) => {
     console.log("Handling error middleware: ", data);

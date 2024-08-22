@@ -1,33 +1,33 @@
 const { DataTypes } = require("sequelize");
 const sequelize = require("./index");
-const Store = require("./store.model");
 
-const User = sequelize.define(
-  "users",
+const Products = sequelize.define(
+  "products",
   {
     id: {
       type: DataTypes.INTEGER,
       autoIncrement: true,
       primaryKey: true,
     },
-    email: {
-      type: DataTypes.STRING,
+    storeId: {
+      type: DataTypes.INTEGER,
       allowNull: false,
-    },
-    password: {
-      type: DataTypes.STRING,
-      allowNull: false,
-    },
-    role: {
-      type: DataTypes.ENUM("admin", "store_owner"),
-      defaultValue: "store_owner",
-      allowNull: false,
+      references: {
+        model: {
+          tableName: "stores",
+        },
+        key: "id",
+      },
     },
     name: {
       type: DataTypes.STRING,
       allowNull: false,
     },
-    phone: {
+    image: {
+      type: DataTypes.STRING,
+      allowNull: true,
+    },
+    description: {
       type: DataTypes.STRING,
       allowNull: true,
     },
@@ -37,6 +37,4 @@ const User = sequelize.define(
   }
 );
 
-User.hasMany(Store, { foreignKey: "ownerId" });
-
-module.exports = User;
+module.exports = Products;
