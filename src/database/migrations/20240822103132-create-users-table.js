@@ -20,8 +20,7 @@ module.exports = {
         allowNull: false,
       },
       role: {
-        type: DataTypes.ENUM,
-        values: ["admin", "store_owner"],
+        type: DataTypes.ENUM("admin", "store_owner"),
         defaultValue: "store_owner",
         allowNull: false,
       },
