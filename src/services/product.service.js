@@ -2,36 +2,62 @@ const { Op } = require("sequelize");
 const db = require("../models");
 const Product = db.product;
 
-exports.getAllData = async () => {
-  return Product.findAll();
-};
+exports.getProduct = async (userId, pagination) => {
+  const { limit, skip, sort, search } = pagination;
 
-exports.getProductByUser = async (userId, pagination) => {
-  console.log(pagination);
-  
+  const whereSearchClause = whereSearchClauseFunction(search);
+
   const data = await db.product.findAll({
-    where: {
-      [Op.or]: [
-        {
-          name: {
-            [Op.like]: "%bia%",
-          },
-        },
-        {
-          description: {
-            [Op.like]: "%bia%",
-          },
-        },
-      ],
+    attributes: {
+      exclude: ["createdAt", "updatedAt"],
     },
     include: [
       {
         association: "store",
-        where: { ownerId: userId },
+        where: userId ? { ownerId: userId } : {},
+        attributes: {
+          exclude: ["createdAt", "updatedAt"],
+        },
+        required: true,
       },
     ],
+    where: whereSearchClause,
+    order: sort,
+    limit,
+    offset: skip,
+    raw: true,
   });
   return data;
+};
+
+const whereSearchClauseFunction = (search) => {
+  if (search.name && search.description) {
+    return {
+      [Op.and]: [
+        {
+          name: {
+            [Op.like]: `%${search.name}%`,
+          },
+        },
+        {
+          description: {
+            [Op.like]: `%${search.description}%`,
+          },
+        },
+      ],
+    };
+  }
+
+  if (search.name && !search.description) {
+    return {
+      [Op.like]: `${search.name}%`,
+    };
+  }
+  if (!search.name && search.description) {
+    return {
+      [Op.like]: `${search.name}%`,
+    };
+  }
 };
 
 exports.createData = async (dataParams) => {
