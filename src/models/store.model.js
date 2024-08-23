@@ -1,40 +1,42 @@
 const { DataTypes } = require("sequelize");
-const sequelize = require("./index");
 const User = require("./user.model");
+const Product = require("./product.model");
 
-const Store = sequelize.define(
-  "stores",
-  {
-    id: {
-      type: DataTypes.INTEGER,
-      autoIncrement: true,
-      primaryKey: true,
-    },
-    ownerId: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-      references: {
-        model: {
-          tableName: User,
+module.exports = (sequelize, Sequelize) => {
+  const Store = sequelize.define(
+    "stores",
+    {
+      id: {
+        type: DataTypes.INTEGER,
+        autoIncrement: true,
+        primaryKey: true,
+      },
+      ownerId: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        references: {
+          model: {
+            tableName: User,
+          },
+          key: "id",
         },
-        key: "id",
+      },
+      name: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
+      address: {
+        type: DataTypes.STRING,
+        allowNull: false,
       },
     },
-    name: {
-      type: DataTypes.STRING,
-      allowNull: false,
-    },
-    address: {
-      type: DataTypes.STRING,
-      allowNull: false,
-    },
-  },
-  {
-    timestamps: true,
-  }
-);
-Store.associations = (models) => {
-  Store.belongsTo(User, { foreignKey: "ownerId", as: "User" });
+    {
+      timestamps: true,
+    }
+  );
+  Store.associate = (models) => {
+    Store.belongsTo(models.user, { foreignKey: "ownerId", as: "user" });
+    Store.hasMany(models.product, { foreignKey: "storeId", as: "products" });
+  };
+  return Store;
 };
-
-module.exports = Store;

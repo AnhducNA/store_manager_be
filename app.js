@@ -3,18 +3,19 @@ require("dotenv").config();
 const express = require("express");
 const cors = require("cors");
 const app = express();
-const sequelize = require("./src/models/index");
+const db = require("./src/models");
 const initRoute = require("./src/routes");
 
 // Connect to the database
-sequelize
-  .authenticate()
+db.sequelize
+  .sync()
   .then(() => {
-    console.log("Connection has been established successfully.");
+    console.log("Synced db.");
   })
-  .catch((error) => {
-    console.error("Unable to connect to the database: ", error);
+  .catch((err) => {
+    console.log("Failed to sync db: " + err.message);
   });
+
 app.use(cors());
 
 // Middleware to parse JSON requests
