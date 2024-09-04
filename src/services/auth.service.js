@@ -13,7 +13,7 @@ exports.login = async (loginParams = { email: "", password: "" }) => {
   }
   const isCompare = await bcrypt.compareSync(
     loginParams.password,
-    userLogin.password
+    userLogin.password,
   );
 
   if (isCompare === false) {
@@ -24,7 +24,7 @@ exports.login = async (loginParams = { email: "", password: "" }) => {
 };
 
 exports.register = async (
-  registerParams = { name: "", email: "", password: "" }
+  registerParams = { name: "", email: "", password: "" },
 ) => {
   const user = await UserService.getUserByEmail(registerParams.email);
   if (user) {

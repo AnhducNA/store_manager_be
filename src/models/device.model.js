@@ -15,8 +15,8 @@ const Devices = sequelize.define(
       allowNull: false,
       references: {
         model: Users,
-        key: 'id'
-      }
+        key: "id",
+      },
     },
     machineCode: {
       type: DataTypes.STRING,
@@ -89,7 +89,7 @@ const Devices = sequelize.define(
   },
   {
     timestamps: true,
-  }
+  },
 );
 
 module.exports = Devices;

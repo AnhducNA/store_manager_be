@@ -24,7 +24,7 @@ const CategoryDevice = sequelize.define(
   },
   {
     timestamps: true,
-  }
+  },
 );
 
 module.exports = CategoryDevice;

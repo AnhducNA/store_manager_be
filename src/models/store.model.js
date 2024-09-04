@@ -32,7 +32,7 @@ module.exports = (sequelize, Sequelize) => {
     },
     {
       timestamps: true,
-    }
+    },
   );
   Store.associate = (models) => {
     Store.belongsTo(models.user, { foreignKey: "ownerId", as: "user" });

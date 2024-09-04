@@ -35,7 +35,7 @@ module.exports = (sequelize, Sequelize) => {
     },
     {
       timestamps: true,
-    }
+    },
   );
   User.associate = (models) => {
     User.hasMany(models.store, { foreignKey: "ownerId" });

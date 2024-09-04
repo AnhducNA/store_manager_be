@@ -34,10 +34,10 @@ module.exports = (sequelize, Sequelize) => {
     },
     {
       timestamps: true,
-    }
+    },
   );
   Product.associate = (models) => {
-    Product.belongsTo(models.store, { foreignKey: "storeId", as: 'store' });
+    Product.belongsTo(models.store, { foreignKey: "storeId", as: "store" });
   };
   return Product;
 };

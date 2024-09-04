@@ -1,4 +1,5 @@
 const { GetPagination } = require("../decorators/get.pagination.decorators");
+const { search } = require("../routes/auth.route");
 const productService = require("../services/product.service");
 // Controller method to get all todos
 exports.getProduct = async (req, res) => {

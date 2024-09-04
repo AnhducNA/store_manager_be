@@ -1,6 +1,5 @@
 const { Op } = require("sequelize");
 const db = require("../models");
-const Product = db.product;
 
 exports.getProduct = async (userId, pagination) => {
   const { limit, skip, sort, search } = pagination;
