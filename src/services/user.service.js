@@ -1,16 +1,16 @@
-const User = require("../models/user.model");
+const db = require("../models/index");
 
 exports.getAllData = async () => {
-  return User.findAll();
+  return db.user.findAll();
 };
 
 exports.createData = async (dataParams) => {
-  const newData = User.create(dataParams);
+  const newData = db.user.create(dataParams);
   return newData;
 };
 
 exports.getUserByEmail = async (email) => {
-  return await User.findOne({
+  return await db.user.findOne({
     attributes: { exclude: ["createdAt", "updatedAt"] },
     where: { email: email },
     raw: true,

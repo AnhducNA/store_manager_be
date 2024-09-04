@@ -46,7 +46,6 @@ const whereSearchClauseFunction = (search) => {
       ],
     };
   }
-
   if (search.name && !search.description) {
     return {
       [Op.like]: `${search.name}%`,
@@ -57,6 +56,11 @@ const whereSearchClauseFunction = (search) => {
       [Op.like]: `${search.name}%`,
     };
   }
+};
+
+exports.getDetail = async (id = 1) => {
+  const data = await db.product.findOne({ where: { id }, raw: true });
+  return data;
 };
 
 exports.createData = async (dataParams) => {

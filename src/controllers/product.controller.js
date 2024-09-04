@@ -1,5 +1,4 @@
 const { GetPagination } = require("../decorators/get.pagination.decorators");
-const { search } = require("../routes/auth.route");
 const productService = require("../services/product.service");
 // Controller method to get all todos
 exports.getProduct = async (req, res) => {
@@ -20,6 +19,21 @@ exports.getProduct = async (req, res) => {
 
     const data = await productService.getProduct(userId, pagination);
     res.status(200).json({ status: 1, data: data });
+  } catch (error) {
+    console.log(error);
+
+    return res.status(500).json({ error: error.message });
+  }
+};
+
+exports.getDetail = async (req, res) => {
+  try {
+    const id = req.params.id;
+    const data = await productService.getDetail(id);
+    if (!data) {
+      return res.status(200).json({ status: 0, message: `Don't have data` });
+    }
+    return res.status(200).json({ status: 1, data: data });
   } catch (error) {
     console.log(error);
 

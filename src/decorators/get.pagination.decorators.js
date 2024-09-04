@@ -7,10 +7,8 @@ const GetPagination = (query) => {
   if (query.skip) {
     paginationParams.skip = parseInt(query.skip.toString());
   }
-  
-  if (query.search) {
-    console.log(query.search, 456);
 
+  if (query.search) {
     const searchArray = query.search.toString().split(",");
     searchArray.map((searchItem) => {
       const field = searchItem.split(":")[0];
